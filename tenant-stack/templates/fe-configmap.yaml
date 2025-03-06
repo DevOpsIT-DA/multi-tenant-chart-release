@@ -1,0 +1,10 @@
+{{- if .Values.frontendApp.configMapReference }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.frontendApp.configMapReference.refName }}
+data:
+{{- range $key, $value := .Values.frontendApp.configMapReference.values }}
+  {{ $key }}: {{ $value | quote }}
+{{- end }}
+{{- end }}

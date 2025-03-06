@@ -1,0 +1,42 @@
+{{- if .Values.frontendApp.assesment }}
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .Release.Name }}-ingress-fe-assessment
+spec:
+  ingressClassName: "nginx"  # Adjust if you use another ingress controller
+  rules:
+    - host: "{{ .Values.frontendApp.counseling.domain }}"
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ .Release.Name }}-service-fe-assessment
+                port:
+                  number: 443
+{{- end }}
+
+---
+{{- if .Values.frontendApp.counseling }}
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .Release.Name }}-ingress-fe-counseling
+spec:
+  ingressClassName: "nginx"  # Adjust if you use another ingress controller
+  rules:
+    - host: "{{ .Values.frontendApp.assesment.domain }}"
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ .Release.Name }}-service-fe-counseling
+                port:
+                  number: 443
+{{- end }}

@@ -1,0 +1,67 @@
+{{- if .Values.frontendApp.assesment }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-app-fe-assessment
+  labels:
+    app: {{ .Release.Name }}-app-fe-assessment
+
+spec:
+  replicas: {{ .Values.frontendUIPortalsekolah.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-app-fe-assessment
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-app-fe-assessment
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/fe-configmap.yaml") . | sha256sum }}
+    spec:
+      containers:
+        - name: frontend-app-assessment
+          image: {{ .Values.frontendApp.assesment.image }}
+          imagePullPolicy: Never
+            {{- if .Values.frontendApp.configMapReference }}
+          envFrom:
+            - configMapRef:
+                name: {{ .Values.frontendApp.configMapReference.configMapReference.refName }}
+            {{- end }}
+          ports:
+            - containerPort: {{ .Values.frontendApp.assesment.port }}
+{{- end }}
+
+---
+{{- if .Values.frontendApp.counseling }}
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-app-fe-counseling
+  labels:
+    app: {{ .Release.Name }}-app-fe-counseling
+
+spec:
+  replicas: {{ .Values.frontendApp.counseling.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-app-fe-counseling
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-app-fe-counseling
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap-fe.yaml") . | sha256sum }}
+    spec:
+      containers:
+        - name: frontend-app-assessment
+          image: {{ .Values.frontendApp.counseling.image }}
+          imagePullPolicy: Never
+            {{- if .Values.frontendApp.configMapReference }}
+          envFrom:
+            - configMapRef:
+                name: {{ .Values.frontendApp.configMapReference.refName }}
+            {{- end }}
+          ports:
+            - containerPort: {{ .Values.frontendApp.counseling.port }}
+{{- end }}

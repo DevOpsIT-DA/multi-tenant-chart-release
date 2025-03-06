@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-app
+  labels:
+    app: {{ .Release.Name }}-app
+spec:
+  replicas: {{ .Values.backendApp.portalSekolah.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-app
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-app
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+    spec:
+      initContainers:
+        - name: init-wait-for-postgres
+          image: postgres:13  # Use PostgreSQL image to get `pg_isready`
+          command:
+            - /bin/sh
+            - "-c"
+            - |
+              echo "Waiting for PostgreSQL to be ready at $POSTGRES_HOST:$POSTGRES_PORT..."
+              until PGPASSWORD="$POSTGRES_PASSWORD" pg_isready -h "$POSTGRES_HOST" -p "$POSTGRES_PORT" -U "$POSTGRES_USER"; do
+                echo "PostgreSQL is not ready, waiting..."
+                sleep 2
+              done
+              echo "PostgreSQL is ready!"
+          env:
+            - name: POSTGRES_HOST
+              value: "{{ .Release.Name }}-postgresql-hl"
+            - name: POSTGRES_PORT
+              value: "5432"
+            - name: POSTGRES_USER
+              value: "{{ .Values.db.username }}"
+            - name: POSTGRES_PASSWORD
+              value: "{{ .Values.db.password }}"
+      containers:
+        - name: backend-app
+          command: ["sh", "./script/entrypoint.sh"]
+          image: {{ .Values.backendApp.portalSekolah.image }}
+          imagePullPolicy: Never
+          env:
+            - name: POSTGRES_HOST
+              value: "{{ .Release.Name }}-postgresql-hl"
+            - name: POSTGRES_PORT
+              value: "5432"
+            - name: POSTGRES_USER
+              value: "{{ .Values.db.username }}"
+            - name: POSTGRES_PASSWORD
+              value: "{{ .Values.db.password }}"
+            - name: POSTGRES_NAME
+              value: "{{ .Values.db.database }}"
+            {{- if .Values.backendApp.portalSekolah.configMapReference }}
+          envFrom:
+            - configMapRef:
+                name: {{ .Values.backendApp.portalSekolah.configMapReference.refName }}
+            {{- end }}
+          ports:
+            - containerPort: {{ .Values.backendApp.portalSekolah.port }}
+      
