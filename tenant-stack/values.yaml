@@ -9,6 +9,16 @@ backendApp:
       values:
         DJANGO_SETTINGS_MODULE: config.settings.development
 
+aws:
+  ecr:
+    enabled: false
+    region: "ap-southeast-3"
+    accessKey: ""
+    secretKey: ""
+    registryId: ""
+    cronSchedule: "0 */6 * * *"  # Run every 6 hours
+    helperImage: "amazon/aws-cli:latest"
+
 frontendApp:
   configMapReference:
     refName: frontend-general-config
