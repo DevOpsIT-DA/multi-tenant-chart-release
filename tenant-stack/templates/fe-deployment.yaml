@@ -21,7 +21,7 @@ spec:
       containers:
         - name: frontend-app-assessment
           image: {{ .Values.frontendApp.assesment.image }}
-          imagePullPolicy: Never
+          imagePullPolicy: {{ if .Values.aws.ecr.enabled }}Always{{ else }}Never{{ end }}
             {{- if .Values.frontendApp.configMapReference }}
           envFrom:
             - configMapRef:
@@ -60,7 +60,7 @@ spec:
       containers:
         - name: frontend-app-assessment
           image: {{ .Values.frontendApp.counseling.image }}
-          imagePullPolicy: Never
+          imagePullPolicy: {{ if .Values.aws.ecr.enabled }}Always{{ else }}Never{{ end }}
             {{- if .Values.frontendApp.configMapReference }}
           envFrom:
             - configMapRef:

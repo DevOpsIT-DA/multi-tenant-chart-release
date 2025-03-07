@@ -17,7 +17,7 @@ aws:
     secretKey: ""
     registryId: ""
     cronSchedule: "0 */6 * * *"  # Run every 6 hours
-    helperImage: "amazon/aws-cli:latest"
+    helperImage: "odaniait/aws-kubectl:latest"
 
 frontendApp:
   configMapReference:

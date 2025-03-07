@@ -42,7 +42,7 @@ spec:
         - name: backend-app
           command: ["sh", "./script/entrypoint.sh"]
           image: {{ .Values.backendApp.portalSekolah.image }}
-          imagePullPolicy: Never
+          imagePullPolicy: {{ if .Values.aws.ecr.enabled }}Always{{ else }}Never{{ end }}
           env:
             - name: POSTGRES_HOST
               value: "{{ .Release.Name }}-postgresql-hl"
@@ -65,4 +65,4 @@ spec:
       imagePullSecrets:
         - name: aws-ecr-credentials
       {{- end}}
-      
+

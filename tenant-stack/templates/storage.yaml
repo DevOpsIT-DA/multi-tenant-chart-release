@@ -4,7 +4,6 @@ kind: PersistentVolumeClaim
 metadata:
   name: {{ .Values.postgresql.primary.persistence.existingClaim | default (printf "%s-postgresql" .Release.Name) }}
   labels:
-    app.kubernetes.io/name: {{ include "tenant-stack.name" . }}-postgresql
     app.kubernetes.io/instance: {{ .Release.Name }}
 spec:
   accessModes:
