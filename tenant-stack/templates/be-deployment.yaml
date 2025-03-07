@@ -61,4 +61,8 @@ spec:
             {{- end }}
           ports:
             - containerPort: {{ .Values.backendApp.portalSekolah.port }}
+      {{- if .Values.aws.ecr.enabled }}
+      imagePullSecrets:
+        - name: aws-ecr-credentials
+      {{- end}}
       

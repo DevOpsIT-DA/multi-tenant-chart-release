@@ -29,6 +29,10 @@ spec:
             {{- end }}
           ports:
             - containerPort: {{ .Values.frontendApp.assesment.port }}
+      {{- if .Values.aws.ecr.enabled }}
+      imagePullSecrets:
+        - name: aws-ecr-credentials
+      {{- end}}
 {{- end }}
 
 ---
@@ -64,4 +68,8 @@ spec:
             {{- end }}
           ports:
             - containerPort: {{ .Values.frontendApp.counseling.port }}
+      {{- if .Values.aws.ecr.enabled }}
+      imagePullSecrets:
+        - name: aws-ecr-credentials
+      {{- end}}
 {{- end }}
