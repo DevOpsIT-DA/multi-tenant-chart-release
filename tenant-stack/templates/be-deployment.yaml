@@ -35,9 +35,9 @@ spec:
             - name: POSTGRES_PORT
               value: "5432"
             - name: POSTGRES_USER
-              value: "{{ .Values.db.username }}"
+              value: "{{ .Values.postgresql.auth.username }}"
             - name: POSTGRES_PASSWORD
-              value: "{{ .Values.db.password }}"
+              value: "{{ .Values.postgresql.auth.password }}"
       containers:
         - name: backend-app
           command: ["sh", "./script/entrypoint.sh"]
@@ -49,11 +49,11 @@ spec:
             - name: POSTGRES_PORT
               value: "5432"
             - name: POSTGRES_USER
-              value: "{{ .Values.db.username }}"
+              value: "{{ .Values.postgresql.auth.username }}"
             - name: POSTGRES_PASSWORD
-              value: "{{ .Values.db.password }}"
+              value: "{{ .Values.postgresql.auth.password }}"
             - name: POSTGRES_NAME
-              value: "{{ .Values.db.database }}"
+              value: "{{ .Values.postgresql.auth.database }}"
             {{- if .Values.backendApp.portalSekolah.configMapReference }}
           envFrom:
             - configMapRef:

@@ -1,0 +1,15 @@
+{{- if and .Values.postgresql.primary.persistence.enabled (not .Values.postgresql.primary.persistence.existingClaim) }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Values.postgresql.primary.persistence.existingClaim | default (printf "%s-postgresql" .Release.Name) }}
+  labels:
+    app.kubernetes.io/name: {{ include "tenant-stack.name" . }}-postgresql
+    app.kubernetes.io/instance: {{ .Release.Name }}
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .Values.postgresql.primary.persistence.size }}
+{{- end }}

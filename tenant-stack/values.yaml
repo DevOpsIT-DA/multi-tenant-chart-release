@@ -1,8 +1,3 @@
-db:
-  username: default_tenant_user
-  password: default_tenant_password
-  database: default_tenant
-
 backendApp:
   portalSekolah:
     image: edu-app:latest
