@@ -40,7 +40,13 @@ spec:
               value: "{{ .Values.postgresql.auth.password }}"
       containers:
         - name: backend-app
-          command: ["sh", "./script/entrypoint.sh"]
+          command:
+          - aws-secret-wrapper
+          - --sf
+          - secretIds
+          - --fancy
+          - --
+          - ./scripts/backend-entrypoint.sh
           image: {{ .Values.backendApp.portalSekolah.image }}
           imagePullPolicy: {{ if .Values.aws.ecr.enabled }}Always{{ else }}Never{{ end }}
           env:
