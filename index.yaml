@@ -3,20 +3,20 @@ entries:
   tenant-stack:
   - apiVersion: v2
     appVersion: "1.0"
-    created: "2025-03-08T02:12:38.44008654+07:00"
+    created: "2025-03-08T02:31:27.394279226+07:00"
     dependencies:
     - name: postgresql
       repository: https://charts.bitnami.com/bitnami
       version: 16.4.6
     description: A chart that deploys a tenant stack and PostgreSQL from Bitnami.
-    digest: d4cf4f567be45f6db58500584421e38539349fec397e984c4fd51ec19cd73d92
+    digest: 27501617a502c77186644a4b42051f331205e52ff6b3983466b058c1420eac21
     name: tenant-stack
     urls:
     - chart-release/tenant-stack-1.0.3.tgz
     version: 1.0.3
   - apiVersion: v2
     appVersion: "1.0"
-    created: "2025-03-08T02:12:38.435760881+07:00"
+    created: "2025-03-08T02:31:27.390892432+07:00"
     dependencies:
     - name: postgresql
       repository: https://charts.bitnami.com/bitnami
@@ -27,4 +27,4 @@ entries:
     urls:
     - chart-release/tenant-stack-1.0.2.tgz
     version: 1.0.2
-generated: "2025-03-08T02:12:38.431439524+07:00"
+generated: "2025-03-08T02:31:27.386373901+07:00"
