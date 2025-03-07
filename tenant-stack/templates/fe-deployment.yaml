@@ -25,7 +25,7 @@ spec:
             {{- if .Values.frontendApp.configMapReference }}
           envFrom:
             - configMapRef:
-                name: {{ .Values.frontendApp.configMapReference.configMapReference.refName }}
+                name: {{ .Values.frontendApp.configMapReference.refName }}
             {{- end }}
           ports:
             - containerPort: {{ .Values.frontendApp.assesment.port }}
