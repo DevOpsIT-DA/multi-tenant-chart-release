@@ -14,7 +14,7 @@ spec:
       labels:
         app: {{ .Release.Name }}-app
       annotations:
-        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+        checksum/config: {{ include (print $.Template.BasePath "/be-configmap.yaml") . | sha256sum }}
     spec:
       initContainers:
         - name: init-wait-for-postgres
