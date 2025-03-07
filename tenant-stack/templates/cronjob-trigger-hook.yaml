@@ -1,0 +1,23 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ .Release.Name }}-cronjob-trigger
+  annotations:
+    "helm.sh/hook": post-install,post-upgrade
+    "helm.sh/hook-weight": "0"
+    "helm.sh/hook-delete-policy": hook-succeeded,hook-failed
+spec:
+  template:
+    spec:
+      serviceAccountName: {{ .Release.Name }}-cronjob-trigger-sa
+      containers:
+      - name: kubectl
+        image: bitnami/kubectl:latest
+        command:
+        - "/bin/sh"
+        - "-c"
+        - |
+          # Replace "your-cronjob-name" with your actual CronJob name
+          kubectl create job --from=cronjob/aws-ecr-credentials-updater post-install-upgrade-trigger-$(date +%s)
+      restartPolicy: OnFailure
+  ttlSecondsAfterFinished: 300
