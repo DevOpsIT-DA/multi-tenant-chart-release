@@ -3,7 +3,20 @@ entries:
   tenant-stack:
   - apiVersion: v2
     appVersion: "1.0"
-    created: "2025-03-08T03:25:39.645488389+07:00"
+    created: "2025-03-08T03:31:44.560503712+07:00"
+    dependencies:
+    - name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: 16.4.6
+    description: A chart that deploys a tenant stack and PostgreSQL from Bitnami.
+    digest: 1cdd44e414773e9a7f78e397ac32c63c623bc4db3268b1266d33d06fafa308ac
+    name: tenant-stack
+    urls:
+    - chart-release/tenant-stack-1.0.7.tgz
+    version: 1.0.7
+  - apiVersion: v2
+    appVersion: "1.0"
+    created: "2025-03-08T03:31:44.557238437+07:00"
     dependencies:
     - name: postgresql
       repository: https://charts.bitnami.com/bitnami
@@ -16,7 +29,7 @@ entries:
     version: 1.0.6
   - apiVersion: v2
     appVersion: "1.0"
-    created: "2025-03-08T03:25:39.641581761+07:00"
+    created: "2025-03-08T03:31:44.553492074+07:00"
     dependencies:
     - name: postgresql
       repository: https://charts.bitnami.com/bitnami
@@ -29,7 +42,7 @@ entries:
     version: 1.0.5
   - apiVersion: v2
     appVersion: "1.0"
-    created: "2025-03-08T03:25:39.637818167+07:00"
+    created: "2025-03-08T03:31:44.550343529+07:00"
     dependencies:
     - name: postgresql
       repository: https://charts.bitnami.com/bitnami
@@ -42,7 +55,7 @@ entries:
     version: 1.0.4
   - apiVersion: v2
     appVersion: "1.0"
-    created: "2025-03-08T03:25:39.634405909+07:00"
+    created: "2025-03-08T03:31:44.546557349+07:00"
     dependencies:
     - name: postgresql
       repository: https://charts.bitnami.com/bitnami
@@ -55,7 +68,7 @@ entries:
     version: 1.0.3
   - apiVersion: v2
     appVersion: "1.0"
-    created: "2025-03-08T03:25:39.630610833+07:00"
+    created: "2025-03-08T03:31:44.542932223+07:00"
     dependencies:
     - name: postgresql
       repository: https://charts.bitnami.com/bitnami
@@ -66,4 +79,4 @@ entries:
     urls:
     - chart-release/tenant-stack-1.0.2.tgz
     version: 1.0.2
-generated: "2025-03-08T03:25:39.626319654+07:00"
+generated: "2025-03-08T03:31:44.539399076+07:00"
