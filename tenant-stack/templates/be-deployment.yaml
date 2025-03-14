@@ -71,18 +71,18 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Release.Name }}-app
+  name: {{ .Release.Name }}-worker-app
   labels:
-    app: {{ .Release.Name }}-app
+    app: {{ .Release.Name }}-worker-app
 spec:
   replicas: {{ .Values.backendApp.portalSekolahWorker.replicaCount }}
   selector:
     matchLabels:
-      app: {{ .Release.Name }}-app
+      app: {{ .Release.Name }}-worker-app
   template:
     metadata:
       labels:
-        app: {{ .Release.Name }}-app
+        app: {{ .Release.Name }}-worker-app
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/be-configmap.yaml") . | sha256sum }}
     spec:
@@ -143,18 +143,18 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Release.Name }}-app
+  name: {{ .Release.Name }}-scheduler-app
   labels:
-    app: {{ .Release.Name }}-app
+    app: {{ .Release.Name }}-scheduler-app
 spec:
   replicas: {{ .Values.backendApp.portalSekolahScheduler.replicaCount }}
   selector:
     matchLabels:
-      app: {{ .Release.Name }}-app
+      app: {{ .Release.Name }}-scheduler-app
   template:
     metadata:
       labels:
-        app: {{ .Release.Name }}-app
+        app: {{ .Release.Name }}-scheduler-app
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/be-configmap.yaml") . | sha256sum }}
     spec:
