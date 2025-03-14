@@ -15,28 +15,28 @@ backendApp:
       refName: sdn-banjararum-config
       values:
         DJANGO_SETTINGS_MODULE: config.settings.development
-  portalSekolahWorker:
-    image: edu-app:latest
-    domain: "portal-sekolah-dev.portalsiswa.id"
-    replicaCount: 1
-    command:
-      - aws-secret-wrapper
-      - --sf
-      - secretIds
-      - --fancy
-      - --
-      - ./scripts/worker-entrypoint.sh
-  portalSekolahScheduler:
-    image: edu-app:latest
-    domain: "portal-sekolah-dev.portalsiswa.id"
-    replicaCount: 1
-    command:
-      - aws-secret-wrapper
-      - --sf
-      - secretIds
-      - --fancy
-      - --
-      - ./scripts/worker-entrypoint.sh
+  # portalSekolahWorker:
+  #   image: edu-app:latest
+  #   domain: "portal-sekolah-dev.portalsiswa.id"
+  #   replicaCount: 1
+  #   command:
+  #     - aws-secret-wrapper
+  #     - --sf
+  #     - secretIds
+  #     - --fancy
+  #     - --
+  #     - ./scripts/worker-entrypoint.sh
+  # portalSekolahScheduler:
+  #   image: edu-app:latest
+  #   domain: "portal-sekolah-dev.portalsiswa.id"
+  #   replicaCount: 1
+  #   command:
+  #     - aws-secret-wrapper
+  #     - --sf
+  #     - secretIds
+  #     - --fancy
+  #     - --
+  #     - ./scripts/worker-entrypoint.sh
 
 aws:
   ecr:
