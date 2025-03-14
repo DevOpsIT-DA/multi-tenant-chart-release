@@ -40,7 +40,7 @@ spec:
               value: "{{ .Values.postgresql.auth.password }}"
       containers:
         - name: backend-app
-          command: {{.Values.backendApp.portalSekolah.command}}
+          command: {{ .Values.backendApp.portalSekolah.command | toYaml | nindent 12 }}
           image: {{ .Values.backendApp.portalSekolah.image }}
           imagePullPolicy: {{ if .Values.aws.ecr.enabled }}Always{{ else }}Never{{ end }}
           env:
@@ -110,7 +110,7 @@ spec:
               value: "{{ .Values.postgresql.auth.password }}"
       containers:
         - name: backend-app
-          command: {{.Values.backendApp.portalSekolahWorker.command}}
+          command: {{ .Values.backendApp.portalSekolahWorker.command | toYaml | nindent 12 }}
           image: {{ .Values.backendApp.portalSekolahWorker.image }}
           imagePullPolicy: {{ if .Values.aws.ecr.enabled }}Always{{ else }}Never{{ end }}
           env:
@@ -129,8 +129,11 @@ spec:
             - configMapRef:
                 name: {{ .Values.backendApp.portalSekolah.configMapReference.refName }}
             {{- end }}
+
+          {{- if .Values.backendApp.portalSekolahWorker.port }}
           ports:
             - containerPort: {{ .Values.backendApp.portalSekolahWorker.port }}
+          {{- end }}
       {{- if .Values.aws.ecr.enabled }}
       imagePullSecrets:
         - name: aws-ecr-credentials
@@ -182,7 +185,7 @@ spec:
               value: "{{ .Values.postgresql.auth.password }}"
       containers:
         - name: backend-app
-          command: {{.Values.backendApp.portalSekolahScheduler.command}}
+          command: {{ .Values.backendApp.portalSekolahScheduler.command | toYaml | nindent 12 }}
           image: {{ .Values.backendApp.portalSekolahScheduler.image }}
           imagePullPolicy: {{ if .Values.aws.ecr.enabled }}Always{{ else }}Never{{ end }}
           env:
@@ -201,8 +204,10 @@ spec:
             - configMapRef:
                 name: {{ .Values.backendApp.portalSekolah.configMapReference.refName }}
             {{- end }}
+          {{- if .Values.backendApp.portalSekolahScheduler.port }}
           ports:
             - containerPort: {{ .Values.backendApp.portalSekolahScheduler.port }}
+          {{- end }}
       {{- if .Values.aws.ecr.enabled }}
       imagePullSecrets:
         - name: aws-ecr-credentials
