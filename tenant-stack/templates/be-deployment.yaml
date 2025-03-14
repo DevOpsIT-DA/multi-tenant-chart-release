@@ -40,13 +40,7 @@ spec:
               value: "{{ .Values.postgresql.auth.password }}"
       containers:
         - name: backend-app
-          command:
-          - aws-secret-wrapper
-          - --sf
-          - secretIds
-          - --fancy
-          - --
-          - ./scripts/backend-entrypoint.sh
+          command: {{.Values.backendApp.PortalSeokolah.command}}
           image: {{ .Values.backendApp.portalSekolah.image }}
           imagePullPolicy: {{ if .Values.aws.ecr.enabled }}Always{{ else }}Never{{ end }}
           env:
@@ -72,3 +66,145 @@ spec:
         - name: aws-ecr-credentials
       {{- end}}
 
+---
+{{- if .Values.backendApp.portalSekolahWorker }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-app
+  labels:
+    app: {{ .Release.Name }}-app
+spec:
+  replicas: {{ .Values.backendApp.portalSekolahWorker.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-app
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-app
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/be-configmap.yaml") . | sha256sum }}
+    spec:
+      initContainers:
+        - name: init-wait-for-postgres
+          image: postgres:13  # Use PostgreSQL image to get `pg_isready`
+          command:
+            - /bin/sh
+            - "-c"
+            - |
+              echo "Waiting for PostgreSQL to be ready at $POSTGRES_HOST:$POSTGRES_PORT..."
+              until PGPASSWORD="$POSTGRES_PASSWORD" pg_isready -h "$POSTGRES_HOST" -p "$POSTGRES_PORT" -U "$POSTGRES_USER"; do
+                echo "PostgreSQL is not ready, waiting..."
+                sleep 2
+              done
+              echo "PostgreSQL is ready!"
+          env:
+            - name: POSTGRES_HOST
+              value: "{{ .Release.Name }}-postgresql-hl"
+            - name: POSTGRES_PORT
+              value: "5432"
+            - name: POSTGRES_USER
+              value: "{{ .Values.postgresql.auth.username }}"
+            - name: POSTGRES_PASSWORD
+              value: "{{ .Values.postgresql.auth.password }}"
+      containers:
+        - name: backend-app
+          command: {{.Values.backendApp.portalSekolahWorker.command}}
+          image: {{ .Values.backendApp.portalSekolahWorker.image }}
+          imagePullPolicy: {{ if .Values.aws.ecr.enabled }}Always{{ else }}Never{{ end }}
+          env:
+            - name: POSTGRES_HOST
+              value: "{{ .Release.Name }}-postgresql-hl"
+            - name: POSTGRES_PORT
+              value: "5432"
+            - name: POSTGRES_USER
+              value: "{{ .Values.postgresql.auth.username }}"
+            - name: POSTGRES_PASSWORD
+              value: "{{ .Values.postgresql.auth.password }}"
+            - name: POSTGRES_NAME
+              value: "{{ .Values.postgresql.auth.database }}"
+            {{- if .Values.backendApp.portalSekolah.configMapReference }}
+          envFrom:
+            - configMapRef:
+                name: {{ .Values.backendApp.portalSekolah.configMapReference.refName }}
+            {{- end }}
+          ports:
+            - containerPort: {{ .Values.backendApp.portalSekolahWorker.port }}
+      {{- if .Values.aws.ecr.enabled }}
+      imagePullSecrets:
+        - name: aws-ecr-credentials
+      {{- end}}
+{{- end }}
+
+---
+
+{{- if .Values.backendApp.portalSekolahScheduler }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-app
+  labels:
+    app: {{ .Release.Name }}-app
+spec:
+  replicas: {{ .Values.backendApp.portalSekolahScheduler.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-app
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-app
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/be-configmap.yaml") . | sha256sum }}
+    spec:
+      initContainers:
+        - name: init-wait-for-postgres
+          image: postgres:13  # Use PostgreSQL image to get `pg_isready`
+          command:
+            - /bin/sh
+            - "-c"
+            - |
+              echo "Waiting for PostgreSQL to be ready at $POSTGRES_HOST:$POSTGRES_PORT..."
+              until PGPASSWORD="$POSTGRES_PASSWORD" pg_isready -h "$POSTGRES_HOST" -p "$POSTGRES_PORT" -U "$POSTGRES_USER"; do
+                echo "PostgreSQL is not ready, waiting..."
+                sleep 2
+              done
+              echo "PostgreSQL is ready!"
+          env:
+            - name: POSTGRES_HOST
+              value: "{{ .Release.Name }}-postgresql-hl"
+            - name: POSTGRES_PORT
+              value: "5432"
+            - name: POSTGRES_USER
+              value: "{{ .Values.postgresql.auth.username }}"
+            - name: POSTGRES_PASSWORD
+              value: "{{ .Values.postgresql.auth.password }}"
+      containers:
+        - name: backend-app
+          command: {{.Values.backendApp.portalSekolahScheduler.command}}
+          image: {{ .Values.backendApp.portalSekolahScheduler.image }}
+          imagePullPolicy: {{ if .Values.aws.ecr.enabled }}Always{{ else }}Never{{ end }}
+          env:
+            - name: POSTGRES_HOST
+              value: "{{ .Release.Name }}-postgresql-hl"
+            - name: POSTGRES_PORT
+              value: "5432"
+            - name: POSTGRES_USER
+              value: "{{ .Values.postgresql.auth.username }}"
+            - name: POSTGRES_PASSWORD
+              value: "{{ .Values.postgresql.auth.password }}"
+            - name: POSTGRES_NAME
+              value: "{{ .Values.postgresql.auth.database }}"
+            {{- if .Values.backendApp.portalSekolah.configMapReference }}
+          envFrom:
+            - configMapRef:
+                name: {{ .Values.backendApp.portalSekolah.configMapReference.refName }}
+            {{- end }}
+          ports:
+            - containerPort: {{ .Values.backendApp.portalSekolahScheduler.port }}
+      {{- if .Values.aws.ecr.enabled }}
+      imagePullSecrets:
+        - name: aws-ecr-credentials
+      {{- end}}
+{{- end }}
