@@ -28,7 +28,7 @@ spec:
           service:
             name: {{ .Release.Name }}-service-fe-assessment
             port:
-              name: http
+              number: 443
   tls:
   - hosts:
     - "{{ .Values.frontendApp.counseling.domain }}"
@@ -85,7 +85,7 @@ spec:
           service:
             name: {{ .Release.Name }}-service-fe-counseling
             port:
-              name: http
+              number: 443
   tls:
   - hosts:
     - "{{ .Values.frontendApp.counseling.domain }}"
