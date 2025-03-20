@@ -47,6 +47,8 @@ aws:
     registryId: ""
     cronSchedule: "0 */6 * * *"  # Run every 6 hours
     helperImage: "odaniait/aws-kubectl:latest"
+  ingress:
+    enabled: false
 
 frontendApp:
   configMapReference:

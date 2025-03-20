@@ -1,5 +1,38 @@
 {{- if .Values.frontendApp.assesment }}
-
+  {{- if .Values.aws.ingress.enabled }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .Release.Name }}-ingress-fe-assessment
+  annotations:
+    kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
+    alb.ingress.kubernetes.io/ssl-redirect: '443'
+    alb.ingress.kubernetes.io/certificate-manager: acm
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/backend-protocol: HTTP
+    alb.ingress.kubernetes.io/healthcheck-path: /
+    alb.ingress.kubernetes.io/region: ap-southeast-3
+    alb.ingress.kubernetes.io/target-group-attributes: stickiness.enabled=true,stickiness.lb_cookie.duration_seconds=86400
+    external-dns.alpha.kubernetes.io/hostname: "{{ .Values.frontendApp.assesment.domain }}"
+spec:
+  ingressClassName: alb
+  rules:
+  - host: "{{ .Values.frontendApp.assesment.domain }}"
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: {{ .Release.Name }}-service-fe-assessment
+            port:
+              name: http
+  tls:
+  - hosts:
+    - "{{ .Values.frontendApp.counseling.domain }}"
+  {{- else}}
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -17,10 +50,46 @@ spec:
                 name: {{ .Release.Name }}-service-fe-assessment
                 port:
                   number: 443
+  {{- end }}
+
 {{- end }}
 
 ---
 {{- if .Values.frontendApp.counseling }}
+  {{- if .Values.aws.ingress.enabled }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .Release.Name }}-ingress-fe-counseling
+  annotations:
+    kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
+    alb.ingress.kubernetes.io/ssl-redirect: '443'
+    alb.ingress.kubernetes.io/certificate-manager: acm
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/backend-protocol: HTTP
+    alb.ingress.kubernetes.io/healthcheck-path: /
+    alb.ingress.kubernetes.io/region: ap-southeast-3
+    alb.ingress.kubernetes.io/target-group-attributes: stickiness.enabled=true,stickiness.lb_cookie.duration_seconds=86400
+    external-dns.alpha.kubernetes.io/hostname: "{{ .Values.frontendApp.counseling.domain }}"
+spec:
+  ingressClassName: alb
+  rules:
+  - host: "{{ .Values.frontendApp.counseling.domain }}"
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: {{ .Release.Name }}-service-fe-counseling
+            port:
+              name: http
+  tls:
+  - hosts:
+    - "{{ .Values.frontendApp.counseling.domain }}"
+  {{- else}}
 
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -39,4 +108,5 @@ spec:
                 name: {{ .Release.Name }}-service-fe-counseling
                 port:
                   number: 443
+  {{- end }}
 {{- end }}
