@@ -1,3 +1,43 @@
+---
+{{- if .Values.frontendApp.main }}
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-app-fe-main
+  labels:
+    app: {{ .Release.Name }}-app-fe-main
+
+spec:
+  replicas: {{ .Values.frontendApp.main.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-app-fe-main
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-app-fe-main
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/fe-configmap.yaml") . | sha256sum }}
+    spec:
+      containers:
+        - name: frontend-app-main
+          image: {{ .Values.frontendApp.main.image }}
+          imagePullPolicy: {{ if .Values.aws.ecr.enabled }}Always{{ else }}Never{{ end }}
+            {{- if .Values.frontendApp.configMapReference }}
+          envFrom:
+            - configMapRef:
+                name: {{ .Values.frontendApp.configMapReference.refName }}
+            {{- end }}
+          ports:
+            - containerPort: {{ .Values.frontendApp.main.port }}
+      {{- if .Values.aws.ecr.enabled }}
+      imagePullSecrets:
+        - name: aws-ecr-credentials
+      {{- end}}
+{{- end }}
+
+---
 {{- if .Values.frontendApp.assesment }}
 apiVersion: apps/v1
 kind: Deployment
