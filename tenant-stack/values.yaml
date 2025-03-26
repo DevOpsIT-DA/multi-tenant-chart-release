@@ -67,6 +67,11 @@ frontendApp:
     domain: "counseling-dev.portalsiswa.id"
     replicaCount: 1
     port: 3000
+  main:
+    image: 329599622510.dkr.ecr.ap-southeast-3.amazonaws.com/main-fe-portalsekolah-staging
+    domain: "sdn1vpn.portal-sekolah.com"
+    replicaCount: 1
+    port: 81
 
 postgresql:
   architecture: standalone
