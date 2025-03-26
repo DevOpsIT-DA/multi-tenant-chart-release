@@ -3,7 +3,20 @@ entries:
   tenant-stack:
   - apiVersion: v2
     appVersion: "1.0"
-    created: "2025-03-26T13:44:39.482555304+07:00"
+    created: "2025-03-26T15:47:14.253927079+07:00"
+    dependencies:
+    - name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: 16.4.6
+    description: A chart that deploys a tenant stack and PostgreSQL from Bitnami.
+    digest: 6c8861fcaec9401397a7b0ef5818e573dbf3f33e9fdee993a26a344374ee3fd6
+    name: tenant-stack
+    urls:
+    - chart-release/tenant-stack-1.2.5.tgz
+    version: 1.2.5
+  - apiVersion: v2
+    appVersion: "1.0"
+    created: "2025-03-26T15:47:14.249393558+07:00"
     dependencies:
     - name: postgresql
       repository: https://charts.bitnami.com/bitnami
@@ -16,7 +29,7 @@ entries:
     version: 1.2.4
   - apiVersion: v2
     appVersion: "1.0"
-    created: "2025-03-26T13:44:39.478309613+07:00"
+    created: "2025-03-26T15:47:14.245798732+07:00"
     dependencies:
     - name: postgresql
       repository: https://charts.bitnami.com/bitnami
@@ -29,7 +42,7 @@ entries:
     version: 1.2.3
   - apiVersion: v2
     appVersion: "1.0"
-    created: "2025-03-26T13:44:39.473264684+07:00"
+    created: "2025-03-26T15:47:14.241557676+07:00"
     dependencies:
     - name: postgresql
       repository: https://charts.bitnami.com/bitnami
@@ -42,7 +55,7 @@ entries:
     version: 1.2.2
   - apiVersion: v2
     appVersion: "1.0"
-    created: "2025-03-26T13:44:39.468580776+07:00"
+    created: "2025-03-26T15:47:14.237262866+07:00"
     dependencies:
     - name: postgresql
       repository: https://charts.bitnami.com/bitnami
@@ -55,7 +68,7 @@ entries:
     version: 1.2.1
   - apiVersion: v2
     appVersion: "1.0"
-    created: "2025-03-26T13:44:39.464841464+07:00"
+    created: "2025-03-26T15:47:14.233495245+07:00"
     dependencies:
     - name: postgresql
       repository: https://charts.bitnami.com/bitnami
@@ -68,7 +81,7 @@ entries:
     version: 1.1.1
   - apiVersion: v2
     appVersion: "1.0"
-    created: "2025-03-26T13:44:39.459948676+07:00"
+    created: "2025-03-26T15:47:14.229388576+07:00"
     dependencies:
     - name: postgresql
       repository: https://charts.bitnami.com/bitnami
@@ -81,7 +94,7 @@ entries:
     version: 1.1.0
   - apiVersion: v2
     appVersion: "1.0"
-    created: "2025-03-26T13:44:39.436839748+07:00"
+    created: "2025-03-26T15:47:14.213571926+07:00"
     dependencies:
     - name: postgresql
       repository: https://charts.bitnami.com/bitnami
@@ -94,7 +107,7 @@ entries:
     version: 1.0.18
   - apiVersion: v2
     appVersion: "1.0"
-    created: "2025-03-26T13:44:39.43305061+07:00"
+    created: "2025-03-26T15:47:14.210001483+07:00"
     dependencies:
     - name: postgresql
       repository: https://charts.bitnami.com/bitnami
@@ -107,7 +120,7 @@ entries:
     version: 1.0.17
   - apiVersion: v2
     appVersion: "1.0"
-    created: "2025-03-26T13:44:39.428376701+07:00"
+    created: "2025-03-26T15:47:14.205916963+07:00"
     dependencies:
     - name: postgresql
       repository: https://charts.bitnami.com/bitnami
@@ -120,7 +133,7 @@ entries:
     version: 1.0.16
   - apiVersion: v2
     appVersion: "1.0"
-    created: "2025-03-26T13:44:39.422954149+07:00"
+    created: "2025-03-26T15:47:14.201692317+07:00"
     dependencies:
     - name: postgresql
       repository: https://charts.bitnami.com/bitnami
@@ -133,7 +146,7 @@ entries:
     version: 1.0.15
   - apiVersion: v2
     appVersion: "1.0"
-    created: "2025-03-26T13:44:39.416021049+07:00"
+    created: "2025-03-26T15:47:14.198169417+07:00"
     dependencies:
     - name: postgresql
       repository: https://charts.bitnami.com/bitnami
@@ -146,7 +159,7 @@ entries:
     version: 1.0.14
   - apiVersion: v2
     appVersion: "1.0"
-    created: "2025-03-26T13:44:39.409562696+07:00"
+    created: "2025-03-26T15:47:14.193974082+07:00"
     dependencies:
     - name: postgresql
       repository: https://charts.bitnami.com/bitnami
@@ -159,7 +172,7 @@ entries:
     version: 1.0.13
   - apiVersion: v2
     appVersion: "1.0"
-    created: "2025-03-26T13:44:39.405719706+07:00"
+    created: "2025-03-26T15:47:14.189536911+07:00"
     dependencies:
     - name: postgresql
       repository: https://charts.bitnami.com/bitnami
@@ -172,7 +185,7 @@ entries:
     version: 1.0.12
   - apiVersion: v2
     appVersion: "1.0"
-    created: "2025-03-26T13:44:39.399692749+07:00"
+    created: "2025-03-26T15:47:14.185733627+07:00"
     dependencies:
     - name: postgresql
       repository: https://charts.bitnami.com/bitnami
@@ -185,7 +198,7 @@ entries:
     version: 1.0.11
   - apiVersion: v2
     appVersion: "1.0"
-    created: "2025-03-26T13:44:39.392902832+07:00"
+    created: "2025-03-26T15:47:14.181528845+07:00"
     dependencies:
     - name: postgresql
       repository: https://charts.bitnami.com/bitnami
@@ -198,7 +211,7 @@ entries:
     version: 1.0.10
   - apiVersion: v2
     appVersion: "1.0"
-    created: "2025-03-26T13:44:39.452978284+07:00"
+    created: "2025-03-26T15:47:14.225152119+07:00"
     dependencies:
     - name: postgresql
       repository: https://charts.bitnami.com/bitnami
@@ -211,7 +224,7 @@ entries:
     version: 1.0.9
   - apiVersion: v2
     appVersion: "1.0"
-    created: "2025-03-26T13:44:39.446335639+07:00"
+    created: "2025-03-26T15:47:14.221549839+07:00"
     dependencies:
     - name: postgresql
       repository: https://charts.bitnami.com/bitnami
@@ -224,7 +237,7 @@ entries:
     version: 1.0.8
   - apiVersion: v2
     appVersion: "1.0"
-    created: "2025-03-26T13:44:39.442490094+07:00"
+    created: "2025-03-26T15:47:14.217575924+07:00"
     dependencies:
     - name: postgresql
       repository: https://charts.bitnami.com/bitnami
@@ -235,4 +248,4 @@ entries:
     urls:
     - chart-release/tenant-stack-1.0.7.tgz
     version: 1.0.7
-generated: "2025-03-26T13:44:39.387445604+07:00"
+generated: "2025-03-26T15:47:14.177242259+07:00"
