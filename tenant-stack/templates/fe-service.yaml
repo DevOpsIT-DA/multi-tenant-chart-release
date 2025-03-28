@@ -10,7 +10,7 @@ metadata:
 spec:
   ports:
     - port: 443
-      targetPort: 3000
+      targetPort: 81
   selector:
     app: {{ .Release.Name }}-app-fe-main
 {{- end }}
